@@ -32,6 +32,9 @@ public class DynamicBeat extends JFrame {
 		introBackground = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
 		//Main 클래스의 위치를 기반으로 해서 introBackground라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를 introBackground라는
 		//이미지 변수에다가 초기화를 해주겠다는 뜻
+		
+		Music introMusic = new Music("introMusic.mp3",true);
+		introMusic.start();
 	}
 	
 	public void paint(Graphics g) {
