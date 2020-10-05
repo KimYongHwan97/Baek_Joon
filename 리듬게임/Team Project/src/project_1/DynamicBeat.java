@@ -19,18 +19,26 @@ public class DynamicBeat extends JFrame {
 	private Graphics screenGraphic;
 	// 더블 버퍼링을 위해 전체화면에 대한 이미지를 담는 두 인스턴스
 
-	private Image introBackground = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
+	private Image background = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
 	// 가져온 이미지를 담을수 있는 하나의 객체
-	// Main 클래스의 위치를 기반으로 해서 introBackground라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를
-	// introBackground라는
+	// Main 클래스의 위치를 기반으로 해서 background라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를
+	// background라는
 	// 이미지 변수에다가 초기화를 해주겠다는 뜻;
 	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menuBar.png")));
 	// JLabel을 이용해 메뉴바 이미지 불러옴 및 생성
 	private ImageIcon exitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/exitEnter.png"));
 	private ImageIcon exitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/exitBasic.png"));
 	
+	private ImageIcon startButtonBasic = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));
+	private ImageIcon startButtonEntered = new ImageIcon(Main.class.getResource("../images/startButtonEntered.png"));
+	
+	private ImageIcon quitButtonBasic = new ImageIcon(Main.class.getResource("../images/quitButtonBasic.png"));
+	private ImageIcon quitButtonEntered = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
+	
 	private JButton exitButton = new JButton(exitButtonBasicImage);
 	// J버튼을 생성하고, 그 기본 디폴트값을 exitButtonBasicImage 로 설정함
+	private JButton startButton = new JButton(startButtonBasic);
+	private JButton quitButton = new JButton(quitButtonBasic);
 
 	private int mouseX,mouseY;
 	//마우스의 X,Y좌표
@@ -95,6 +103,82 @@ public class DynamicBeat extends JFrame {
 		});
 		add(exitButton);
 		
+		
+		startButton.setBounds(40, 200, 400, 100);
+		startButton.setBorderPainted(false);
+		startButton.setContentAreaFilled(false);
+		startButton.setFocusPainted(false);
+		//크기 조절 및 자연스러운 모양으로 들어가도록 해주는 3줄
+		startButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				startButton.setIcon(startButtonEntered);
+				startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				Music buttonEnteredMusic = new Music("buttonenter.mp3",false);
+				buttonEnteredMusic.start();
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				startButton.setIcon(startButtonBasic);
+				startButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				Music buttonPressedMusic = new Music("buttonclick.mp3",false);
+				buttonPressedMusic.start();
+				//게임 시작 이벤트
+				startButton.setVisible(false);
+				quitButton.setVisible(false);
+				background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
+				
+			}
+		});
+		add(startButton);
+		
+		add(quitButton);
+		quitButton.setBounds(40, 330, 400, 100);
+		// X Y , Width , Height
+		quitButton.setBorderPainted(false);
+		quitButton.setContentAreaFilled(false);
+		quitButton.setFocusPainted(false);
+		//크기 조절 및 자연스러운 모양으로 들어가도록 해주는 3줄
+		quitButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				quitButton.setIcon(quitButtonEntered);
+				quitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				Music buttonEnteredMusic = new Music("buttonenter.mp3",false);
+				buttonEnteredMusic.start();
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				quitButton.setIcon(quitButtonBasic);
+				quitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				Music buttonPressedMusic = new Music("buttonclick.mp3",false);
+				buttonPressedMusic.start();
+				try {
+					Thread.sleep(1000);
+					//이걸 넣어주게되면 클릭해서 소리가 나온다음에 1초정도 있다가 프로그램이 종료됨.
+				}
+				catch(InterruptedException ex)
+				{
+					ex.printStackTrace();
+				}
+				System.exit(0);
+				
+			}
+		});
+		add(quitButton);
+		
 		menuBar.setBounds(0, 0, 1280, 30);
 		// 메뉴바의 크기 조절
 		menuBar.addMouseListener(new MouseAdapter()
@@ -120,6 +204,7 @@ public class DynamicBeat extends JFrame {
 						//JFrame의 위치 자체를 바꿔줄수 있게됨.
 						//드래그 할때 순간마다 X Y좌표를 얻어와 자동으로 게임창의 위치를 바꿔주는것
 					}
+					
 				}
 		);
 		add(menuBar);
@@ -144,7 +229,7 @@ public class DynamicBeat extends JFrame {
 
 	public void screenDraw(Graphics g) {
 
-		g.drawImage(introBackground, 0, 0, null);
+		g.drawImage(background, 0, 0, null);
 		// 인트로 백그라운드를 스크린 이미지에 그려줄 수 있도록 하는것
 		paintComponents(g);
 		// 이미지를 단순하게 해당 screenIamge라는 변수 안에 그려주는거 외에
