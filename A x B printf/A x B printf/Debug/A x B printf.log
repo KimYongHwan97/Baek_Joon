@@ -1,0 +1,4 @@
+﻿  소스.c
+C:\Users\koh55\Desktop\Code\A x B printf\A x B printf\소스.c(8,6): warning C4013: 'exit'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\koh55\Desktop\Code\A x B printf\A x B printf\소스.c(6,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  A x B printf.vcxproj -> C:\Users\koh55\Desktop\Code\A x B printf\Debug\A x B printf.exe
