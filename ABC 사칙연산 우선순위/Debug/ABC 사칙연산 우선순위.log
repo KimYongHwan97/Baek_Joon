@@ -1,0 +1,4 @@
+﻿  소스.c
+C:\Users\koh55\Desktop\Code\ABC 사칙연산 우선순위\소스.c(14,6): warning C4013: 'exit'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\koh55\Desktop\Code\ABC 사칙연산 우선순위\소스.c(7,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ABC 사칙연산 우선순위.vcxproj -> C:\Users\koh55\Desktop\Code\ABC 사칙연산 우선순위\Debug\ABC 사칙연산 우선순위.exe
