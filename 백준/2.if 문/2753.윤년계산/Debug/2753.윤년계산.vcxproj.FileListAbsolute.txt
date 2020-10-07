@@ -1,0 +1,2 @@
+C:\Users\koh55\Desktop\Code\백준\2.if 문\2753.윤년계산\Debug\2753.윤년계산.exe
+C:\Users\koh55\Desktop\Code\백준\2.if 문\2753.윤년계산\Debug\2753.윤년계산.pdb
