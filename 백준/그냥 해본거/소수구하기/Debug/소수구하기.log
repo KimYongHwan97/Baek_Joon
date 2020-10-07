@@ -1,0 +1,4 @@
+﻿  소스.c
+C:\Users\koh55\Desktop\Code\백준\그냥 해본거\소수구하기\소스.c(8,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\koh55\Desktop\Code\백준\그냥 해본거\소수구하기\소스.c(22,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  소수구하기.vcxproj -> C:\Users\koh55\Desktop\Code\백준\그냥 해본거\소수구하기\Debug\소수구하기.exe
