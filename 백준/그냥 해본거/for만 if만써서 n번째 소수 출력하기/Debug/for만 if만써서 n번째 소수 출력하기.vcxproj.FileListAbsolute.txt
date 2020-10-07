@@ -1,0 +1,2 @@
+C:\Users\koh55\Desktop\Code\백준\그냥 해본거\for만 if만써서 n번째 소수 출력하기\Debug\for만 if만써서 n번째 소수 출력하기.exe
+C:\Users\koh55\Desktop\Code\백준\그냥 해본거\for만 if만써서 n번째 소수 출력하기\Debug\for만 if만써서 n번째 소수 출력하기.pdb
