@@ -1,0 +1,2 @@
+C:\Users\koh55\Desktop\Code\시험 점수 출력\Debug\시험 점수 출력.exe
+C:\Users\koh55\Desktop\Code\시험 점수 출력\Debug\시험 점수 출력.pdb
