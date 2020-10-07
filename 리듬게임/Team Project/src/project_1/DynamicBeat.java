@@ -19,7 +19,7 @@ public class DynamicBeat extends JFrame {
 	private Graphics screenGraphic;
 	// 더블 버퍼링을 위해 전체화면에 대한 이미지를 담는 두 인스턴스
 
-	private Image background = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
+	private Image background = new ImageIcon(Main.class.getResource("../images/introBackground.png")).getImage();
 	// 가져온 이미지를 담을수 있는 하나의 객체
 	// Main 클래스의 위치를 기반으로 해서 background라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를
 	// background라는
@@ -104,7 +104,7 @@ public class DynamicBeat extends JFrame {
 		add(exitButton);
 		
 		
-		startButton.setBounds(40, 200, 400, 100);
+		startButton.setBounds(40, 430, 400, 100);
 		startButton.setBorderPainted(false);
 		startButton.setContentAreaFilled(false);
 		startButton.setFocusPainted(false);
@@ -139,7 +139,7 @@ public class DynamicBeat extends JFrame {
 		add(startButton);
 		
 		add(quitButton);
-		quitButton.setBounds(40, 330, 400, 100);
+		quitButton.setBounds(40, 550, 400, 100);
 		// X Y , Width , Height
 		quitButton.setBorderPainted(false);
 		quitButton.setContentAreaFilled(false);
