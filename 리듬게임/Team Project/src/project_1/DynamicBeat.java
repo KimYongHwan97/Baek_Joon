@@ -24,6 +24,8 @@ public class DynamicBeat extends JFrame {
 	// Main 클래스의 위치를 기반으로 해서 background라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를
 	// background라는
 	// 이미지 변수에다가 초기화를 해주겠다는 뜻;
+	private Image selectedImage = new ImageIcon(Main.class.getResource("../images/Start Image.jpg")).getImage();
+	//현재 선택된 곡의 이미지 / 시작 이미지
 	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menuBar.png")));
 	// JLabel을 이용해 메뉴바 이미지 불러옴 및 생성
 	private ImageIcon exitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/exitEnter.png"));
@@ -35,13 +37,27 @@ public class DynamicBeat extends JFrame {
 	private ImageIcon quitButtonBasic = new ImageIcon(Main.class.getResource("../images/quitButtonBasic.png"));
 	private ImageIcon quitButtonEntered = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
 	
+	private ImageIcon leftButtonBasic = new ImageIcon(Main.class.getResource("../images/LeftButtonBasic.png"));
+	private ImageIcon leftButtonEntered = new ImageIcon(Main.class.getResource("../images/LeftButtonEntered.png"));
+	
+	private ImageIcon rightButtonBasic = new ImageIcon(Main.class.getResource("../images/RightButtonBasic.png"));
+	private ImageIcon rightButtonEntered = new ImageIcon(Main.class.getResource("../images/RightButtonEntered.png"));
+	
+	private Image titleImage = new ImageIcon(Main.class.getResource("../images/FadedTitleimage.png")).getImage();
+	
 	private JButton exitButton = new JButton(exitButtonBasicImage);
 	// J버튼을 생성하고, 그 기본 디폴트값을 exitButtonBasicImage 로 설정함
 	private JButton startButton = new JButton(startButtonBasic);
 	private JButton quitButton = new JButton(quitButtonBasic);
+	private JButton leftButton = new JButton(leftButtonBasic);
+	private JButton rightButton = new JButton(rightButtonBasic);
 
 	private int mouseX,mouseY;
 	//마우스의 X,Y좌표
+	
+
+	private boolean isMainScreen = false;
+	//처음에는 메인화면이 아닌 시작화면이기때문에 false값 / 메인화면으로 바뀌면 이게 트루값
 	
 	public DynamicBeat() // 생성자를 만들었음
 	{
@@ -132,13 +148,17 @@ public class DynamicBeat extends JFrame {
 				//게임 시작 이벤트
 				startButton.setVisible(false);
 				quitButton.setVisible(false);
+				leftButton.setVisible(true);
+				rightButton.setVisible(true);
 				background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
 				
+				isMainScreen = true;
+				//시작버튼이 눌렸을때 게임화면이 띄워지게끔
 			}
 		});
 		add(startButton);
 		
-		add(quitButton);
+		
 		quitButton.setBounds(40, 550, 400, 100);
 		// X Y , Width , Height
 		quitButton.setBorderPainted(false);
@@ -177,7 +197,77 @@ public class DynamicBeat extends JFrame {
 				
 			}
 		});
+		
 		add(quitButton);
+		
+		leftButton.setVisible(false);
+		leftButton.setBounds(140, 310, 60, 60);
+		// X Y , Width , Height
+		leftButton.setBorderPainted(false);
+		leftButton.setContentAreaFilled(false);
+		leftButton.setFocusPainted(false);
+		//크기 조절 및 자연스러운 모양으로 들어가도록 해주는 3줄
+		leftButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				leftButton.setIcon(leftButtonEntered);
+				leftButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				Music buttonEnteredMusic = new Music("buttonenter.mp3",false);
+				buttonEnteredMusic.start();
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				leftButton.setIcon(leftButtonBasic);
+				leftButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				Music buttonPressedMusic = new Music("buttonclick.mp3",false);
+				buttonPressedMusic.start();
+				//왼쪽 버튼 이벤트
+				
+				
+			}
+		});
+		add(leftButton);
+		
+		
+		rightButton.setVisible(false);
+		rightButton.setBounds(1080, 310, 60, 60);
+		// X Y , Width , Height
+		rightButton.setBorderPainted(false);
+		rightButton.setContentAreaFilled(false);
+		rightButton.setFocusPainted(false);
+		//크기 조절 및 자연스러운 모양으로 들어가도록 해주는 3줄
+		rightButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				rightButton.setIcon(rightButtonEntered);
+				rightButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				Music buttonEnteredMusic = new Music("buttonenter.mp3",false);
+				buttonEnteredMusic.start();
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				rightButton.setIcon(rightButtonBasic);
+				rightButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				Music buttonPressedMusic = new Music("buttonclick.mp3",false);
+				buttonPressedMusic.start();
+				//오른쪽 버튼 이벤트
+				
+				
+			}
+		});
+		add(rightButton);
 		
 		menuBar.setBounds(0, 0, 1280, 30);
 		// 메뉴바의 크기 조절
@@ -231,9 +321,19 @@ public class DynamicBeat extends JFrame {
 
 		g.drawImage(background, 0, 0, null);
 		// 인트로 백그라운드를 스크린 이미지에 그려줄 수 있도록 하는것
+		// 단순히 이미지를 화면에 출력해줄때 쓰는것!
+		if(isMainScreen)
+		{ // isMainScreen 이 트루값일때 한해서 특정한 이미지를 그려줄 수 있도록 한다.
+			g.drawImage(selectedImage, 340, 100, null);
+			//selectedImage를 시작화면이 아닌 메인화면일때 보여줄수 있도록 하는것
+			g.drawImage(titleImage,340,70,null);
+			
+		}
 		paintComponents(g);
 		// 이미지를 단순하게 해당 screenIamge라는 변수 안에 그려주는거 외에
 		// 따로 JLabel같은 것들을 JFrame안에 추가하면 그걸 그려주는 것
+		//메인 프레임에 추가된 요소들을 보여주는것들을 보여주는 함수!
+		//add.rightbutton 같은거
 
 		this.repaint();
 		// paint는 JFrame을 상속받은 GUI게임에서 가장 첫번째로 화면을 그려주는 함수다

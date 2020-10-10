@@ -1,0 +1,4 @@
+﻿  소스.c
+C:\Users\koh55\Desktop\Code\소수 구하기 최적화 코드\소스.c(7,5): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\koh55\Desktop\Code\소수 구하기 최적화 코드\소스.c(4,12): warning C4101: 'j' :참조되지 않은 지역 변수입니다.
+  소수 구하기 최적화 코드.vcxproj -> C:\Users\koh55\Desktop\Code\소수 구하기 최적화 코드\Debug\소수 구하기 최적화 코드.exe

@@ -1,0 +1,2 @@
+C:\Users\koh55\Desktop\Code\소수 구하기 최적화 코드\Debug\소수 구하기 최적화 코드.exe
+C:\Users\koh55\Desktop\Code\소수 구하기 최적화 코드\Debug\소수 구하기 최적화 코드.pdb
