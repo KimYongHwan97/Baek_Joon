@@ -50,6 +50,9 @@ public class DynamicBeat extends JFrame {
 	private ImageIcon hardButtonBasic = new ImageIcon(Main.class.getResource("../images/HardButtonBasic.png"));
 	private ImageIcon hardButtonEntered = new ImageIcon(Main.class.getResource("../images/HardButtonEntered.png"));
 
+	private ImageIcon backButtonBasic = new ImageIcon(Main.class.getResource("../images/backButtonBasic.png"));
+	private ImageIcon backButtonEntered = new ImageIcon(Main.class.getResource("../images/backButtonEntered.png"));
+
 	private JButton exitButton = new JButton(exitButtonBasicImage);
 	// J버튼을 생성하고, 그 기본 디폴트값을 exitButtonBasicImage 로 설정함
 	private JButton startButton = new JButton(startButtonBasic);
@@ -58,6 +61,8 @@ public class DynamicBeat extends JFrame {
 	private JButton rightButton = new JButton(rightButtonBasic);
 	private JButton easyButton = new JButton(easyButtonBasic);
 	private JButton hardButton = new JButton(hardButtonBasic);
+	private JButton backButton = new JButton(backButtonBasic);
+
 
 	private int mouseX,mouseY;
 	//마우스의 X,Y좌표
@@ -78,7 +83,7 @@ public class DynamicBeat extends JFrame {
 	private int nowSelected = 0;
 	//현재 선택된 곡을 의미하며, 0을 선택함으로써 첫번째곡을 의미하도록 만들어줌.
 	// 현재 선택이 된 트랙의 번호를 의미 Array는 0부터 시작하기 때문에 현재곡은 Faded가 설정될것임. 처음 넣은게 그거거든.
-	
+	private Music introMusic = new Music("introMusic.mp3", true);
 	
 	
 	public DynamicBeat() // 생성자를 만들었음
@@ -103,9 +108,8 @@ public class DynamicBeat extends JFrame {
 		setLayout(null);
 		// 버튼이나 JLabel을 넣었을때 그 위치 그대로 꽂히게 됨
 
-
-		Music introMusic = new Music("introMusic.mp3", true);
 		introMusic.start();
+		
 		
 		trackList.add(new Track("FadedTitleimage.png", "FadedStartImage.png","FadedGameImage.png",
 				"Alan Walker - Fade [NCS Release].mp3","Alan Walker - Fade [NCS Release].mp3"));
@@ -185,21 +189,10 @@ public class DynamicBeat extends JFrame {
 				buttonPressedMusic.start();
 				introMusic.close();
 				//게임 시작하고나면 인트로 뮤직 끄기
-				selectTrack(0);
-				//게임이 시작되면 첫번째 인덱스 인 Faded가 재생되므로 첫번째곡인 fade를 재생해라
-				
 
 				//****************게임 시작 이벤트*******************
-				startButton.setVisible(false);
-				quitButton.setVisible(false);
-				leftButton.setVisible(true);
-				rightButton.setVisible(true);
-				easyButton.setVisible(true);
-				hardButton.setVisible(true);
-				background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
-				
-				isMainScreen = true;
-				//시작버튼이 눌렸을때 게임화면이 띄워지게끔
+				enterMain();
+
 			}
 		});
 		add(startButton);
@@ -387,6 +380,42 @@ public class DynamicBeat extends JFrame {
 		});
 		add(hardButton);
 		
+		///////////////////////////////////////버튼 간 구분선/////////////////////
+		
+		backButton.setVisible(false);
+		backButton.setBounds(20, 50, 60, 60);
+		// X Y , Width , Height
+		backButton.setBorderPainted(false);
+		backButton.setContentAreaFilled(false);
+		backButton.setFocusPainted(false);
+		//크기 조절 및 자연스러운 모양으로 들어가도록 해주는 3줄
+		backButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				backButton.setIcon(backButtonEntered);
+				backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				Music buttonEnteredMusic = new Music("buttonenter.mp3",false);
+				buttonEnteredMusic.start();
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				backButton.setIcon(backButtonBasic);
+				backButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				Music buttonPressedMusic = new Music("buttonclick.mp3",false);
+				buttonPressedMusic.start();
+				//메인으로 돌아가는 이벤트
+				backMain();
+				
+			}
+		});
+		add(backButton);
+		
 		
 		menuBar.setBounds(0, 0, 1280, 30);
 		// 메뉴바의 크기 조절
@@ -504,9 +533,42 @@ public class DynamicBeat extends JFrame {
 		easyButton.setVisible(false);
 		hardButton.setVisible(false);
 		background = new ImageIcon(Main.class.getResource("../images/" + trackList.get(nowSelected).getGameImage())).getImage();
-		
+		backButton.setVisible(true);
 	}
 		
+	
+	public void backMain() // 백버튼을 눌럿을때 다시 메인화면으로 돌아가는 함수
+	{
+		isMainScreen = true;
+		leftButton.setVisible(true);
+		rightButton.setVisible(true);
+		easyButton.setVisible(true);
+		hardButton.setVisible(true);
+		//메인 배경화면을 띄우고, 각 버튼을 되살림
+		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
+		backButton.setVisible(false); // 백버튼이 보이면 안되니까 false
+		selectTrack(nowSelected); // 현재 메인화면에서 선택된 곡 다시 플레이
+		
+
+	}
+	
+	public void enterMain()//메인화면으로 들어가는 메소드
+	{
+		
+		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
+		startButton.setVisible(false);
+		quitButton.setVisible(false);
+		leftButton.setVisible(true);
+		rightButton.setVisible(true);
+		easyButton.setVisible(true);
+		hardButton.setVisible(true);
+		introMusic.close();
+		selectTrack(0);
+		//게임이 시작되면 첫번째 인덱스 인 Faded가 재생되므로 첫번째곡인 fade를 재생해라
+
+		isMainScreen = true;
+		//시작버튼이 눌렸을때 게임화면이 띄워지게끔
+	}
 }
 //class는 틀이라고 이해할 수 있는데, 클래스를 이용해서 하나의 실질적으로 사용할수
 //있는 인스턴스라는 객체를 만들어 주엇을때 가장 먼저 실행되는 부분이 이 생성자임
