@@ -23,12 +23,7 @@ public class DynamicBeat extends JFrame {
 	private Graphics screenGraphic;
 	// 더블 버퍼링을 위해 전체화면에 대한 이미지를 담는 두 인스턴스
 
-	private Image gameInfoImage = new ImageIcon(Main.class.getResource("../images/gameInfo.png")).getImage();
-	private Image judgementInfoImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
-	private Image noteRouteImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
-	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
-	private Image noteBasicImage = new ImageIcon(Main.class.getResource("../images/note.png")).getImage();
-	
+
 	private Image background = new ImageIcon(Main.class.getResource("../images/introBackground.png")).getImage();
 	// 가져온 이미지를 담을수 있는 하나의 객체
 	// Main 클래스의 위치를 기반으로 해서 background라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를
@@ -96,6 +91,11 @@ public class DynamicBeat extends JFrame {
 	// 현재 선택이 된 트랙의 번호를 의미 Array는 0부터 시작하기 때문에 현재곡은 Faded가 설정될것임. 처음 넣은게 그거거든.
 	private Music introMusic = new Music("introMusic.mp3", true);
 	
+	public static Game game = new Game();
+	//Game 클래스를 game으로 변수로 만들고, Game()으로 초기화
+	//Game 프로그램을 실행했을때 단 하나의 게임만 실행가능 (동시에 여러곡 재생 불가)
+	//그래서 이 프로젝트 전체에서 Game이라는건 전체에서 통용되는 변수이기 때문에 public static을 붙여서 전체 통용 변수로 만듬. 
+	
 	
 	public DynamicBeat() // 생성자를 만들었음
 	{
@@ -118,6 +118,9 @@ public class DynamicBeat extends JFrame {
 		// 페인트 컴포넌트를 했을때 배경이 회색이 아니라 전부 하얀색으로 바뀜
 		setLayout(null);
 		// 버튼이나 JLabel을 넣었을때 그 위치 그대로 꽂히게 됨
+		
+		addKeyListener(new KeyListener());
+		//KeyListener 라는 클래스를 게임에 적용시키기 위해 만든 줄
 
 		introMusic.start();
 		
@@ -487,65 +490,19 @@ public class DynamicBeat extends JFrame {
 			g.drawImage(titleImage,340,70,null);
 			
 		}
-		paintComponents(g);
+
 		// 이미지를 단순하게 해당 screenIamge라는 변수 안에 그려주는거 외에
 		// 따로 JLabel같은 것들을 JFrame안에 추가하면 그걸 그려주는 것
 		//메인 프레임에 추가된 요소들을 보여주는것들을 보여주는 함수!
 		//add.rightbutton 같은거
 		if(isGameScreen)
 		{
-			g.drawImage(gameInfoImage, 0, 660, null);
-			g.drawImage(judgementInfoImage, 0, 580, null);
-			
-			g.drawImage(noteRouteImage, 228, 30, null);//1
-			g.drawImage(noteRouteImage, 332, 30, null);//2
-			g.drawImage(noteRouteImage, 436, 30, null);//3
-			g.drawImage(noteRouteImage, 540, 30, null);//4
-			g.drawImage(noteRouteImage, 640, 30, null);//5
-			g.drawImage(noteRouteImage, 744, 30, null);//6
-			g.drawImage(noteRouteImage, 848, 30, null);//7
-			g.drawImage(noteRouteImage, 952, 30, null);//8
-
-			g.drawImage(noteRouteLineImage, 224, 30, null);//1
-			g.drawImage(noteRouteLineImage, 328, 30, null);//2
-			g.drawImage(noteRouteLineImage, 432, 30, null);//3
-			g.drawImage(noteRouteLineImage, 536, 30, null);//4
-			g.drawImage(noteRouteLineImage, 740, 30, null);//5
-			g.drawImage(noteRouteLineImage, 844, 30, null);//6
-			g.drawImage(noteRouteLineImage, 948, 30, null);//7
-			g.drawImage(noteRouteLineImage, 1052, 30, null);//8
-			
-			g.drawImage(noteBasicImage, 228, 30, null);//1
-			g.drawImage(noteBasicImage, 322, 30, null);//2
-			g.drawImage(noteBasicImage, 436, 30, null);//3
-			g.drawImage(noteBasicImage, 540, 30, null);//4
-			g.drawImage(noteBasicImage, 640, 30, null);//5
-			g.drawImage(noteBasicImage, 744, 30, null);//6
-			g.drawImage(noteBasicImage, 848, 30, null);//7
-			g.drawImage(noteBasicImage, 952, 30, null);//8
-			
-			g.setColor(Color.white);
-			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			//위 코드를 추가함으로써 밑에 Alan Walker 글자의 깨짐현상을 해결할 수 있음.
-			g.setFont(new Font("Arial",Font.BOLD,30));
-			g.drawString("Alan Walker - Fade", 20, 702);
-			g.drawString("Easy",1190,702);
-			g.setFont(new Font("Arial",Font.PLAIN,26));
-			g.setColor(Color.DARK_GRAY);
-			g.drawString("S", 270, 609);
-			g.drawString("D", 374, 609);
-			g.drawString("F", 478, 609);
-			g.drawString("Space Bar", 580, 609);
-			g.drawString("J", 784, 609);
-			g.drawString("K", 889, 609);
-			g.drawString("L", 993, 609);
-			g.setColor(Color.LIGHT_GRAY);
-			g.setFont(new Font("Elephant",Font.BOLD,30));
-			g.drawString("000000", 565, 702);
-			
+			game.screenDraw(g);
+			//game에 screenDraw 를 통해서 그림을 그릴수 있도록 해줌
 		}
 
 		this.repaint();
+		paintComponents(g);
 		// paint는 JFrame을 상속받은 GUI게임에서 가장 첫번째로 화면을 그려주는 함수다
 		// 이건 약속된거라 바뀌지 않는다.
 	}
@@ -599,7 +556,9 @@ public class DynamicBeat extends JFrame {
 		hardButton.setVisible(false);
 		background = new ImageIcon(Main.class.getResource("../images/" + trackList.get(nowSelected).getGameImage())).getImage();
 		backButton.setVisible(true);
-
+	//	setFocusable(true);
+		requestFocus(); 
+		//다른 컴포넌트들에게 포커스가 집중되어 키 리스너가 듣지 않을수있음 그래서 키 리스너 컴포넌트에 포커스를 해줌. ( 활성창)
 	}
 		
 	
