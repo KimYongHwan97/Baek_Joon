@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		new DynamicBeat();
+		new DynamicBeat(); 
 		// 만들은 DynamicBeat라는 클래스를 이용한 인스턴스 객체 생성
 		
 	}

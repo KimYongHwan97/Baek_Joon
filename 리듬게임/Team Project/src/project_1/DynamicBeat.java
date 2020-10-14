@@ -2,8 +2,11 @@ package project_1;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -20,6 +23,12 @@ public class DynamicBeat extends JFrame {
 	private Graphics screenGraphic;
 	// 더블 버퍼링을 위해 전체화면에 대한 이미지를 담는 두 인스턴스
 
+	private Image gameInfoImage = new ImageIcon(Main.class.getResource("../images/gameInfo.png")).getImage();
+	private Image judgementInfoImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
+	private Image noteRouteImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
+	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
+	private Image noteBasicImage = new ImageIcon(Main.class.getResource("../images/note.png")).getImage();
+	
 	private Image background = new ImageIcon(Main.class.getResource("../images/introBackground.png")).getImage();
 	// 가져온 이미지를 담을수 있는 하나의 객체
 	// Main 클래스의 위치를 기반으로 해서 background라는 리소스를 얻어온 뒤에 그것의 이미지 인스턴스를
@@ -70,6 +79,8 @@ public class DynamicBeat extends JFrame {
 
 	private boolean isMainScreen = false;
 	//처음에는 메인화면이 아닌 시작화면이기때문에 false값 / 메인화면으로 바뀌면 이게 트루값
+	private boolean isGameScreen = false;
+	// 게임화면으로 넘어갈때 true 넣을꺼임
 	
 	ArrayList<Track> trackList = new ArrayList<Track>();
 	//Track이라는 클래스를 이용하기 위한 명령어
@@ -456,14 +467,15 @@ public class DynamicBeat extends JFrame {
 		// 1200x720의 이미지를 만들어둔 뒤에 그걸 스크린 이미지에 넣어주겠다
 		screenGraphic = screenImage.getGraphics();
 		// 스크린 이미지를 이용해서 그래픽 객체를 얻어오는것
-		screenDraw(screenGraphic);
+		screenDraw((Graphics2D) screenGraphic);
 		// 스크린 그래픽에 어떠한 그림을 그려주는것
+		//Graphics2D 를 사용하면 밑에 텍스트가 조금씩 깨지는걸 해결할수있음
 		g.drawImage(screenImage, 0, 0, null);
 		// 스크린 이미지를 0,0의 위치에 그려주는 것
 
 	}
 
-	public void screenDraw(Graphics g) {
+	public void screenDraw(Graphics2D g) {
 
 		g.drawImage(background, 0, 0, null);
 		// 인트로 백그라운드를 스크린 이미지에 그려줄 수 있도록 하는것
@@ -480,6 +492,58 @@ public class DynamicBeat extends JFrame {
 		// 따로 JLabel같은 것들을 JFrame안에 추가하면 그걸 그려주는 것
 		//메인 프레임에 추가된 요소들을 보여주는것들을 보여주는 함수!
 		//add.rightbutton 같은거
+		if(isGameScreen)
+		{
+			g.drawImage(gameInfoImage, 0, 660, null);
+			g.drawImage(judgementInfoImage, 0, 580, null);
+			
+			g.drawImage(noteRouteImage, 228, 30, null);//1
+			g.drawImage(noteRouteImage, 332, 30, null);//2
+			g.drawImage(noteRouteImage, 436, 30, null);//3
+			g.drawImage(noteRouteImage, 540, 30, null);//4
+			g.drawImage(noteRouteImage, 640, 30, null);//5
+			g.drawImage(noteRouteImage, 744, 30, null);//6
+			g.drawImage(noteRouteImage, 848, 30, null);//7
+			g.drawImage(noteRouteImage, 952, 30, null);//8
+
+			g.drawImage(noteRouteLineImage, 224, 30, null);//1
+			g.drawImage(noteRouteLineImage, 328, 30, null);//2
+			g.drawImage(noteRouteLineImage, 432, 30, null);//3
+			g.drawImage(noteRouteLineImage, 536, 30, null);//4
+			g.drawImage(noteRouteLineImage, 740, 30, null);//5
+			g.drawImage(noteRouteLineImage, 844, 30, null);//6
+			g.drawImage(noteRouteLineImage, 948, 30, null);//7
+			g.drawImage(noteRouteLineImage, 1052, 30, null);//8
+			
+			g.drawImage(noteBasicImage, 228, 30, null);//1
+			g.drawImage(noteBasicImage, 322, 30, null);//2
+			g.drawImage(noteBasicImage, 436, 30, null);//3
+			g.drawImage(noteBasicImage, 540, 30, null);//4
+			g.drawImage(noteBasicImage, 640, 30, null);//5
+			g.drawImage(noteBasicImage, 744, 30, null);//6
+			g.drawImage(noteBasicImage, 848, 30, null);//7
+			g.drawImage(noteBasicImage, 952, 30, null);//8
+			
+			g.setColor(Color.white);
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			//위 코드를 추가함으로써 밑에 Alan Walker 글자의 깨짐현상을 해결할 수 있음.
+			g.setFont(new Font("Arial",Font.BOLD,30));
+			g.drawString("Alan Walker - Fade", 20, 702);
+			g.drawString("Easy",1190,702);
+			g.setFont(new Font("Arial",Font.PLAIN,26));
+			g.setColor(Color.DARK_GRAY);
+			g.drawString("S", 270, 609);
+			g.drawString("D", 374, 609);
+			g.drawString("F", 478, 609);
+			g.drawString("Space Bar", 580, 609);
+			g.drawString("J", 784, 609);
+			g.drawString("K", 889, 609);
+			g.drawString("L", 993, 609);
+			g.setColor(Color.LIGHT_GRAY);
+			g.setFont(new Font("Elephant",Font.BOLD,30));
+			g.drawString("000000", 565, 702);
+			
+		}
 
 		this.repaint();
 		// paint는 JFrame을 상속받은 GUI게임에서 가장 첫번째로 화면을 그려주는 함수다
@@ -528,12 +592,14 @@ public class DynamicBeat extends JFrame {
 			selectedMusic.close();
 		isMainScreen = false;
 		//메인 화면이 아님 여기서부터는 인게임 화면
+		isGameScreen = true;
 		leftButton.setVisible(false);
 		rightButton.setVisible(false);
 		easyButton.setVisible(false);
 		hardButton.setVisible(false);
 		background = new ImageIcon(Main.class.getResource("../images/" + trackList.get(nowSelected).getGameImage())).getImage();
 		backButton.setVisible(true);
+
 	}
 		
 	
@@ -548,6 +614,7 @@ public class DynamicBeat extends JFrame {
 		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
 		backButton.setVisible(false); // 백버튼이 보이면 안되니까 false
 		selectTrack(nowSelected); // 현재 메인화면에서 선택된 곡 다시 플레이
+		isGameScreen = false;
 		
 
 	}
