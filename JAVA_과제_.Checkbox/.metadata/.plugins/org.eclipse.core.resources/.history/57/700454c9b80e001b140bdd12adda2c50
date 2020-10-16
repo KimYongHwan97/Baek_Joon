@@ -1,0 +1,105 @@
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class CheckBoxItemEventEx extends JFrame{
+
+	private JCheckBox [] check = new JCheckBox[7];
+	private JLabel[] money = new JLabel[7];
+	private JTextField[] tf = new JTextField[7];
+	private String [] names = {"오만원","만원","천원","500원","100원","50원","10원","1원"};
+
+
+	private JLabel sumLabel;
+	
+	
+	public CheckBoxItemEventEx() {
+		setTitle("체크박스 만들기 예제");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c = getContentPane();
+		c.setLayout(null);
+		JButton Cal = new JButton("계산");
+		JLabel Input = new JLabel("금액");
+		JTextField Text = new JTextField(10);
+		
+		
+		add(Cal);
+		Cal.setLocation(280, 15);
+		Cal.setSize(80,30);
+		
+		c.add(Input);
+		Input.setLocation(100,15);
+		Input.setSize(80,30);
+		
+		c.add(Text);
+		Text.setLocation(150,10);
+		Text.setSize(80,30);
+		
+		MyItemListener listener = new MyItemListener();
+		for(int i = 0; i<fruits.length;i++)
+		{
+			money[i] = new JLabel(names[i]);
+			c.add(money[i]);
+			money[i].setLocation(100,50+(20*i));
+			money[i].setSize(200,20);
+			tf[i] = new JTextField(10);
+			c.add(tf[i]);
+			tf[i].setLocation(150,50+(20*i));
+			tf[i].setSize(80,20);
+			
+			c.add(check[i]);
+			check[i].setLocation(170,50+(20*i));
+			check[i].setSize(80,20);
+			
+			check[i].addItemListener(listener);
+		}
+		sumLabel = new JLabel ("현재 0원 입니다.");
+		c.add(sumLabel);
+		
+		setSize(600,600);
+		setVisible(true);
+	}
+
+	class MyItemListener implements ItemListener
+	{
+		private int sum = 0;
+		
+		public void itemStateChanged(ItemEvent e)
+		{
+			if(e.getStateChange()==ItemEvent.SELECTED)
+			{
+				if(e.getItem() == fruits[0])
+					sum+= 100;
+				else if(e.getItem() == fruits[1])
+					sum+= 500;
+				else 
+					sum+= 20000;
+			
+			}
+			else
+			{
+				if(e.getItem() == fruits[0])
+					sum-= 100;
+				else if(e.getItem() == fruits[1])
+					sum-= 500;
+				else
+					sum-= 20000;
+			}
+			sumLabel.setText("현재" + sum + "원 입니다.");
+		}
+	}
+		
+	public static void main(String [] args)
+	{
+		new CheckBoxItemEventEx();
+		
+	}
+	
+}
