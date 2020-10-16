@@ -1,0 +1,20 @@
+import java.awt.Container;
+import java.awt.FlowLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
+public class TextAreaEx extends JFrame{
+private JTextArea ta = new JTextArea(7,20);
+
+public TextAreaEx()
+{
+	setTitle("텍스트 영역 만들기");
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	Container c = getContentPane();
+	c.setLayout(new FlowLayout());
+	
+	
+	
+}
+}

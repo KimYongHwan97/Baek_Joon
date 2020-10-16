@@ -1,0 +1,72 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.text.BadLocationException;
+
+public class TextAreaEx extends JFrame{
+	private JSlider slider = new JSlider(JSlider.HORIZONTAL,0,100,0); // Jslider 생성
+	private JTextArea ta = new JTextArea(7,10); // TextArea 생성
+	
+	public TextAreaEx()
+	{
+		setTitle("TextArea 예제");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Container c = getContentPane();
+		c.setLayout(new BorderLayout());
+		c.add(slider, BorderLayout.SOUTH);
+		c.add(new JScrollPane(ta),BorderLayout.CENTER);
+		
+		slider.setPaintLabels(true);
+		slider.setPaintTicks(true);
+		slider.setPaintTrack(true);
+		slider.setMajorTickSpacing(20);
+		
+		slider.addChangeListener(new ChangeListener() 
+		{
+			@Override
+			public void stateChanged(ChangeEvent e)
+			{
+				JSlider slider = (JSlider)e.getSource();
+				if(ta.getText().length() <= slider.getValue())// TextArea의 값을 받아와서 그 길이와 slider의 값을 비교해서 TextArea의 값이 더 작거나 같다면
+				{
+					slider.setValue(ta.getText().length()); // slider의 값을 TextArea의 값과 같게 맞춰줌
+				}
+
+			}
+		});
+		
+		ta.addKeyListener(new KeyAdapter() 
+		{
+		@Override
+		public void keyTyped(KeyEvent e) 
+		{
+			JTextArea ta = (JTextArea)e.getSource();
+			int size = ta.getText().length();
+			try
+			{
+				if(size >= 100)
+					ta.setText(ta.getText(0,100));
+			}
+			catch(BadLocationException ex) {}
+			slider.setValue(size);
+		}
+		});
+		
+		setSize(300,250);
+		setVisible(true);
+	}
+
+public static void main(String[] args)
+{
+	new TextAreaEx();
+}
+
+
+
+}
+
+
+
+

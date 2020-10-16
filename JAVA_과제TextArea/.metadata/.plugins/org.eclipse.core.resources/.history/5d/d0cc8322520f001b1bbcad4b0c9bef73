@@ -1,0 +1,93 @@
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.TextArea;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+
+
+public class TextAreaEx extends JFrame {
+	
+	private int count, b;
+	Container c = getContentPane();
+
+	JLabel jl = new JLabel();
+
+	TextArea TA = new TextArea("",7,20);
+	JSlider sl = new JSlider();
+
+	TextAreaEx()
+
+	{
+
+		setTitle("TextAreaEx");
+		
+		c.add(TA);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+		c.setLayout(new FlowLayout());
+
+		sl = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
+
+		sl.setPaintLabels(true);
+
+		sl.setPaintTicks(true);
+
+		sl.setPaintTrack(true);
+
+		sl.setMajorTickSpacing(20);
+
+		sl.setMinorTickSpacing(10);
+
+		c.add(sl);
+
+	//	slider.addChangeListener(new MyChangeListener());
+
+		c.add(jl);
+
+		setSize(280, 300);
+
+		setVisible(true);
+		
+		c.addKeyListener(new MyKeyListener());
+
+	}
+	class MyKeyListener extends KeyAdapter
+	{
+		public void keyPressed(KeyEvent e)
+		{
+			count++;
+			sl.add(count);
+		}
+	}
+
+/*	class MyChangeListener implements ChangeListener
+
+	{
+
+		public void stateChanged(ChangeEvent e)
+
+		{
+
+			int x = slider.getValue();
+
+			jl.setText(x + " ");
+
+		}
+
+	}*/
+
+	public static void main(String[] args)
+
+	{
+
+		new TextAreaEx();
+
+	}
+
+}

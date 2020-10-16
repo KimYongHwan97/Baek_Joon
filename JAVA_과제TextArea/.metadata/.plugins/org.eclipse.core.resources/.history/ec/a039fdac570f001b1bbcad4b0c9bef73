@@ -1,0 +1,23 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
+public class TextAreaEx extends JFrame{
+	private JSlider slider = new JSlider(JSlider.HORIZONTAL,0,100,0);
+	private JTextArea ta = new JTextArea(7,10);
+	
+	public TextAreaEx()
+	{
+		setTitle("TextArea ¿¹Á¦");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Container c = getContentPane();
+		c.setLayout(new BorderLayout());
+		c.add(slider, BorderLayout.SOUTH);
+		c.add(new JScrollPane(ta),BorderLayout.CENTER);
+		
+		slider.setPaintLabels(true);
+		
+	}
+}
